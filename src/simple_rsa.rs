@@ -25,7 +25,7 @@ pub fn generate_private_key(bits: usize) -> RsaPrivateKey {
     return priv_key;
 }
 
-pub fn encrypt(priv_key: &RsaPrivateKey, data: &[u8; 11]) -> Vec<u8> {
+pub fn encrypt(priv_key: &RsaPrivateKey, data: &[u8]) -> Vec<u8> {
     let mut rng = rand::thread_rng(); // rand@0.8
     let pub_key = RsaPublicKey::from(priv_key);
 

@@ -1,7 +1,3 @@
-// Ajoutez ces dépendances dans Cargo.toml :
-// aes-gcm = "0.10"
-// rand = "0.8"
-
 use aes_gcm::{
     aead::{Aead, AeadCore, KeyInit, OsRng},
     Aes256Gcm, Nonce, Key
