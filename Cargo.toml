@@ -3,13 +3,32 @@ name = "Marginal"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-reqwest="0.12.14"
-tokio={version = "1.44.1", features = ["full"]}
+reqwest = { version = "0.12.14", features = ["rustls-tls"], default-features = false }
+tokio = { version = "1.44.1", features = ["full"] }
 rsa = "0.9.8"
 rand = "0.8"
 hex = "0.4.0"
-aes="0.8.4"
+aes = "0.8.4"
 aes-gcm = "0.10"
+
+# Optimisations pour la release
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+opt-level = "z"
+
+# Configuration pour Windows GNU (évite VCRUNTIME)
+[target.x86_64-pc-windows-gnu]
+rustflags = [
+    "-C", "target-feature=+crt-static",
+    "-C", "link-arg=-static"
+]
+
+# Configuration MSVC alternative (si GNU ne marche pas)
+[target.x86_64-pc-windows-msvc]
+rustflags = [
+    "-C", "target-feature=+crt-static"
+]
